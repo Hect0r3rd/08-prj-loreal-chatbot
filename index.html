@@ -12,14 +12,34 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Elegant serif for headings (brand-appropriate) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+  <!-- Theme color and favicon (inline SVG) -->
+  <meta name="theme-color" content="#E3A535">
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23E3A535"/%3E%3Ctext x="50" y="57" font-size="48" text-anchor="middle" font-family="Playfair Display, serif" fill="%23000000"%3EL%3C/text%3E%3C/svg%3E'>
   </head>
 
   <body>
     <div class="page-wrapper">
       <!------- Header / Branding ------->
-      <header class="site-header">
-        <h1 class="site-title">Smart Product Advisor</h1>
+  <header class="site-header" role="banner">
+  <!-- Logo file is in img/loreal-logo.png -->
+        <h1 class="site-title">
+          <img class="logo" src="img/loreal-logo.png" alt="L'Oréal" />
+          <span class="title-sub">Product Advisor</span>
+        </h1>
+        <p class="site-tag">Personalized product recommendations &amp; routine tips</p>
+        
+          <!-- Theme switcher: try different brand-tuned color palettes -->
+          <div class="theme-switcher">
+            <label for="themeSelect" class="visually-hidden">Theme</label>
+            <select id="themeSelect" aria-label="Choose color theme">
+              <option value="classic">Classic</option>
+              <option value="warm">Warm Gold</option>
+              <option value="deep">Deep Noir</option>
+            </select>
+          </div>
       </header>
 
       <!------- Chat Area ------->
@@ -43,18 +63,21 @@
               <span class="material-icons">send</span>
               <span class="visually-hidden">Send</span>
             </button>
+            <button type="button" id="clearBtn" class="clear-btn">Clear</button>
           </form>
         </section>
       </main>
 
       <!------- Footer Links ------->
       <footer class="site-footer">
-        <p>&copy; 2025 Company Name. All rights reserved.</p>
+        <p>&copy; 2025 L'Oréal Product Advisor — Demo. All rights reserved.</p>
+        <p class="legal">This project is an educational demo and is not affiliated with or endorsed by L'Oréal.</p>
         <nav>
-          <!-- These URLs are placeholders -->
+          <!-- Placeholder URLs: replace with real links if needed -->
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Use</a>
-          <a href="#">Contact</a>
+          <a href="mailto:hello@example.com">Contact</a>
+          <a href="#">Accessibility</a>
         </nav>
       </footer>
     </div>

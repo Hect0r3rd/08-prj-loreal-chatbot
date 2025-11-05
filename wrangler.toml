@@ -1,0 +1,6 @@
+[build]
+  upload = { format = "service-worker" }
+
+name = "loreal-worker"
+main = "worker/index.js"
+compatibility_date = "2025-11-03"
