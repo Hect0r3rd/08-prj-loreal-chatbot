@@ -83,6 +83,9 @@
     </div>
 
     <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
+    <!-- Public config (committed) defines WORKER_URL for deployed sites -->
+    <script src="config.js"></script>
+    <!-- Local secrets.js (gitignored) can override config.js for development -->
     <script src="secrets.js"></script>
     <script src="script.js"></script>
   </body>
