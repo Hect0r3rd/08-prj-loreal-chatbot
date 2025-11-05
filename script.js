@@ -15,6 +15,52 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
+// Allow a local override for WORKER_URL via localStorage (helps deployed static sites)
+try {
+  const stored = localStorage.getItem('loreal_worker_url');
+  if (!window.WORKER_URL && stored) {
+    window.WORKER_URL = stored;
+  }
+} catch (e) {
+  // ignore storage errors
+}
+
+// Small helper UI: if WORKER_URL is missing, show an input to let the user set it (persisted to localStorage)
+function renderWorkerConfigUI() {
+  const container = document.getElementById('workerConfig');
+  if (!container) return;
+  try {
+    const current = (typeof WORKER_URL !== 'undefined' && WORKER_URL) ? WORKER_URL : '';
+    if (!current) {
+      container.innerHTML = `
+        <div class="worker-config-row">
+          <label for="workerUrlInput" style="font-size:13px; color:var(--muted);">Worker URL:</label>
+          <input id="workerUrlInput" type="text" placeholder="https://your-worker.workers.dev/" style="margin-left:8px; padding:6px; width:320px;">
+          <button id="workerUrlSave" style="margin-left:8px; padding:6px 10px;">Save</button>
+        </div>`;
+      const input = document.getElementById('workerUrlInput');
+      const save = document.getElementById('workerUrlSave');
+      if (save) {
+        save.addEventListener('click', () => {
+          const v = (input && input.value) ? input.value.trim() : '';
+          if (!v) return;
+          try { localStorage.setItem('loreal_worker_url', v); } catch (e) {}
+          window.WORKER_URL = v;
+          // re-render to show success
+          renderWorkerConfigUI();
+        });
+      }
+    } else {
+      container.innerHTML = `<div style="font-size:13px; color:var(--muted);">Worker URL configured.</div>`;
+    }
+  } catch (e) {
+    // ignore any UI render errors
+  }
+}
+
+// Render initial worker config UI
+renderWorkerConfigUI();
+
 // Conversation history for multi-turn context (LevelUp requirement)
 // Start with a strong system prompt to restrict assistant to L'Oréal topics only.
 const systemPrompt = `You are a helpful assistant that ONLY answers questions about L'Oréal products, routines, product recommendations, ingredients, and beauty-related topics associated with L'Oréal brands. If the user asks about anything outside L'Oréal products or beauty routines (finance, politics, unrelated brands, detailed medical advice, illegal activities, etc.), politely refuse and state you can only help with L'Oréal-related beauty/product questions. Keep answers friendly, concise, and use brand-appropriate tone.`;
